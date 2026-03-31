@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portaria de Saída Temporária</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+
+        .document-container {
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            padding: 10mm 20mm;
+            margin: auto;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+        }
+
+        .header-text {
+            text-align: center;
+            flex-grow: 1;
+            padding: 0 10px;
+        }
+
+        .header-text p {
+            margin: 2px 0;
+        }
+
+        .right-logo-container {
+            width: 70px; /* Space for logo and text */
+            text-align: center;
+            position: relative;
+        }
+
+        .small-corner-line {
+            position: absolute;
+            top: 20px; /* Example placement, adjust as needed */
+            right: 0;
+            width: 10px;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            height: 10px;
+        }
+
+        .portaria-number {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .director-text {
+            text-align: right;
+            margin-left: 40%;
+            margin-bottom: 30px;
+        }
+
+        .resolve-text {
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .infopen-text {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .small-icon-placeholder {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #aaa;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .text-body {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .clausula {
+            text-align: right;
+            margin-bottom: 30px;
+        }
+
+        .date-location {
+            text-align: right;
+            margin-bottom: 40px;
+        }
+
+        .signature-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .stamp-and-sign {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .stamp {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #999;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+            margin-right: 20px;
+            transform: rotate(-15deg);
+        }
+
+        .signature-image {
+            width: 150px;
+            height: 40px;
+            border: 2px dashed #999;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .director-name {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .summary-block {
+            width: 80%;
+            margin: auto;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .summary-item {
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 80px;
+        }
+
+        .info-value-block {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding-top: 5px;
+            position: relative;
+        }
+
+        .info-value {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 20px;
+        }
+
+        .placeholder-text {
+            margin-top: 10px;
+            font-weight: normal;
+            font-size: 10pt;
+            width: 100%;
+            text-align: center;
+        }
+
+        .corner-bottom-line-l {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 10px;
+            height: 10px;
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+
+        .corner-bottom-line-r {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 10px;
+            height: 10px;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+
+        @media print {
+            body { border: none; }
+            .document-container { box-shadow: none; border: none; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+
+        <div class="header">
+            <img src="logo-seap.png" style="width: 60px; height: auto;">
+            <div class="header-text">
+                <p>Governo do Estado do Pará</p>
+                <p>Secretaria de Estado de Administração Penitenciária</p>
+                <p>Unidade de Custódia e Reinserção de Santarém- UCRSTM</p>
+            </div>
+            <div class="right-logo-container">
+                <img src="logo-gov-estado.png" style="width: 60px; height: auto;">
+                <div class="small-corner-line"></div>
+                <p style="font-size: 9px; margin: 2px 0;">GOVERNO DO PARÁ</p>
+            </div>
+        </div>
+
+        <div class="portaria-number">
+            <p>PORTARIA N° numPortaria – U.C.R.STM</p>
+        </div>
+
+        <div class="director-text">
+            <p>O Diretor da Unidade de Custódia e Reinserção de Santarém, no uso de suas atribuições legais, que lhe são conferidas.</p>
+        </div>
+
+        <div class="resolve-text">
+            <p>RESOLVE</p>
+        </div>
+
+        <div class="infopen-text">
+            <p><b>INFOPEN: infopen-input</b></p>
+        </div>
+
+        <div class="text-body">
+            <p>Conceder o Benefício de Saída Temporária, em cumprimento a Ordem de Serviço n° 01/2022/VEP/STM, prolatada pelo Dr. <b>FLÁVIO OLIVEIRA LAUANDE</b>, Juiz de Direito Titular da VEP/STM, para o apenado: <b>nome-input</b>, no período de <b>dataSaida</b> a <b>dataRetorno</b>, devendo o mesmo, apresentar-se nesta Casa Penal no dia <b>dataRetorno</b> até as <b>horaRetorno</b>.</p>
+        </div>
+
+        <div class="clausula">
+            <p>Dê-se Ciência, Registre-se e Cumpra-se.</p>
+        </div>
+
+        <div class="date-location">
+            <p>Santarém, dataSaida.</p>
+        </div>
+
+        <div class="signature-area">
+            <div class="stamp-and-sign">
+                <img src="assinatura-diretor.png" style="width: 500px; height: auto;">
+            </div>
+        </div>
+
+
+
+<div style="width: 100%; font-family: Arial, sans-serif; margin-top: 130px;">
+    
+    <div style="margin-bottom: 30px;">
+        <div style="display: flex; align-items: flex-end;">
+            <span style="font-weight: bold; white-space: nowrap;">SAÍDA: &nbsp;</span>
+            <span style="font-weight: bold; white-space: nowrap;">dataSaida</span>
+            <div style="flex-grow: 1; border-bottom: 1px solid black; margin: 0 10px; position: relative; bottom: 4px;"></div>
+            <span style="font-weight: bold; white-space: nowrap;">Hora: ________</span>
+        </div>
+        <div style="text-align: center; width: 100%; margin-top: 5px;">
+            <span style="font-weight: bold; font-size: 10pt;">nome-input</span>
+        </div>
+    </div>
+
+    <div>
+        <div style="display: flex; align-items: flex-end;">
+            <span style="font-weight: bold; white-space: nowrap;">RETORNO: &nbsp;</span>
+            <span style="font-weight: bold; white-space: nowrap;">dataRetorno</span>
+            <div style="flex-grow: 1; border-bottom: 1px solid black; margin: 0 10px; position: relative; bottom: 4px;"></div>
+            <span style="font-weight: bold; white-space: nowrap;">Hora: ________</span>
+        </div>
+        <div style="text-align: center; width: 100%; margin-top: 5px;">
+            <span style="font-weight: bold; font-size: 10pt;">nome-input</span>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+        <div class="corner-bottom-line-l"></div>
+        <div class="corner-bottom-line-r"></div>
+
+    </div>
+
+</body>
+</html>

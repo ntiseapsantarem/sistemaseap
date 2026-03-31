@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Portarias</title>
+    <link rel="icon" href="../img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* Estilos da Interface (Baseados na Imagem) */
+
+        .admin-panel {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 { font-size: 2rem; margin-bottom: 20px; }
+
+        .form-group { margin-bottom: 15px; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+
+        input {
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        .row { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 20px; }
+
+        .detento-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-add { background-color: #3498db; color: white; }
+        .btn-generate { background-color: #2ecc71; color: white; margin-top: 20px; }
+        .btn-remove { background-color: #e74c3c; color: white; }
+
+        /* Estilos do Documento (Ocultos na tela, visíveis no PDF) */
+        #print-area { display: none; }
+
+        @media print {
+            #print-area { display: block; }
+            .admin-panel { display: none; }
+        }
+
+        /* Estilo do Documento herdado do seu template */
+        .document-container {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 10mm 20mm;
+            margin: 0;
+            background: white;
+            color: black;
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always; /* Garante um detento por página */
+        }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .header-text { text-align: center; flex-grow: 1; font-size: 11pt; }
+        .header-text p { margin: 2px 0; }
+        .portaria-number { text-align: left; margin-bottom: 20px; font-weight: bold; }
+        .director-text { text-align: right; margin-left: 40%; margin-bottom: 30px; font-size: 11pt; }
+        .resolve-text { text-align: center; text-transform: uppercase; font-weight: bold; margin-bottom: 20px; }
+        .text-body { text-align: justify; margin-bottom: 20px; line-height: 1.4; }
+        .date-location { text-align: right; margin-bottom: 40px; }
+        .signature-area { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
+        
+        .footer-signature { width: 100%; margin-top: 100px; }
+        .footer-row { display: flex; align-items: flex-end; margin-bottom: 30px; }
+        .line-grow { flex-grow: 1; border-bottom: 1px solid black; margin: 0 10px; }
+    </style>
+</head>
+<body>
+
+<!--  NAVBAR -->
+<div class="navbar">
+    
+    <div class="navbar-left">
+        <img src="../img/logo.png" class="logo">
+
+        <div>
+            <div class="title-left">SEAP-PA</div>
+            <div class="badge">SANTARÉM</div>
+        </div>
+    </div>
+
+    <div class="navbar-center">
+        SECRETARIA DE ESTADO DE<br>
+        ADMINISTRAÇÃO PENITENCIÁRIA
+    </div>
+
+    <div class="navbar-right" onclick="irHome()"><img src="../img/casa.png" class="logo"></div>
+
+</div>    
+
+    <div class="admin-panel">
+        <h1>GERADOR DE PORTARIA</h1>
+
+        <div class="row">
+            <div>
+                <label>Portaria:</label>
+                <input type="text" id="numPortaria" placeholder="Ex: 001/2026">
+            </div>
+            <div>
+                <label>Saída:</label>
+                <input type="date" id="dataSaida">
+            </div>
+            <div>
+                <label>Retorno:</label>
+                <input type="date" id="dataRetorno">
+            </div>
+            <div>
+                <label>Hora:</label>
+                <input type="time" id="horaRetorno">
+            </div>
+        </div>
+
+        <h3>Detentos</h3>
+        <div id="detentos-container">
+            <div class="detento-row">
+                <input type="text" placeholder="INFOPEN" class="infopen-input">
+                <input type="text" placeholder="Nome do detento" style="flex-grow: 1;" class="nome-input">
+            </div>
+        </div>
+
+        <button class="btn-add" onclick="addDetentoRow()">+ Adicionar</button>
+        <br>
+        <button class="btn-generate" onclick="generatePDF()">GERAR PDF (DOCX)</button>
+    </div>
+
+    <div id="print-area"></div>
+
+
+<script>
+    function addDetentoRow() {
+        const container = document.getElementById('detentos-container');
+        const div = document.createElement('div');
+        div.className = 'detento-row';
+        div.innerHTML = `
+            <input type="text" placeholder="INFOPEN" class="infopen-input">
+            <input type="text" placeholder="Nome do detento" style="flex-grow: 1;" class="nome-input">
+            <button class="btn-remove" onclick="this.parentElement.remove()">X</button>
+        `;
+        container.appendChild(div);
+    }
+
+    function irHome() {
+        window.location.href = "../index.html";
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return "__/__/____";
+        const [year, month, day] = dateStr.split('-');
+        return `${day}/${month}/${year}`;
+    }
+
+    function formatDateExtenso(dateStr) {
+        if (!dateStr) return "___ de ___________ de ____";
+        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const [year, month, day] = dateStr.split('-');
+        return `${parseInt(day)} de ${meses[parseInt(month) - 1]} de ${year}`;
+    }
+
+    async function generatePDF() {
+        const numPortaria = document.getElementById('numPortaria').value;
+        const dataSaidaRaw = document.getElementById('dataSaida').value;
+        const dataSaida = formatDate(dataSaidaRaw);
+        const dataSaidaExtenso = formatDateExtenso(dataSaidaRaw);
+        const dataRetorno = formatDate(document.getElementById('dataRetorno').value);
+        const horaRetorno = document.getElementById('horaRetorno').value || "__:__";
+        
+        const rows = document.querySelectorAll('.detento-row');
+        const printArea = document.getElementById('print-area');
+        printArea.innerHTML = ''; 
+        printArea.style.display = 'block';
+
+        rows.forEach((row, index) => {
+            const infopen = row.querySelector('.infopen-input').value;
+            const nome = row.querySelector('.nome-input').value;
+
+            const page = document.createElement('div');
+            // IMPORTANTE: Removemos estilos que possam causar overflow
+            page.style.width = "210mm";
+            page.style.height = "296.5mm"; // Ligeiramente menor que 297mm para evitar vazar página
+            page.style.position = "relative";
+            page.style.overflow = "hidden";
+            page.style.boxSizing = "border-box";
+            page.style.backgroundColor = "white";
+            page.style.color = "black";
+            page.style.padding = "10mm 20mm";
+
+            page.innerHTML = `
+                <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <img src="logo-seap.png" style="width: 60px; height: auto;">
+                    <div class="header-text" style="text-align: center; flex-grow: 1;">
+                        <p style="margin: 2px 0;">Governo do Estado do Pará</p>
+                        <p style="margin: 2px 0;">Secretaria de Estado de Administração Penitenciária</p>
+                        <p style="margin: 2px 0;">Unidade de Custódia e Reinserção de Santarém- UCRSTM</p>
+                    </div>
+                    <div class="right-logo-container" style="text-align: center; width: 70px;">
+                        <img src="logo-gov-estado.png" style="width: 60px; height: auto;">
+                        <p style="font-size: 9px; margin: 2px 0;">GOVERNO DO PARÁ</p>
+                    </div>
+                </div>
+
+                <div class="portaria-number" style="margin-bottom: 20px;">
+                    <p>PORTARIA N° ${numPortaria} – U.C.R.STM</p>
+                </div>
+
+                <div class="director-text" style="text-align: right; margin-left: 40%; margin-bottom: 30px;">
+                    <p>O Diretor da Unidade de Custódia e Reinserção de Santarém, no uso de suas atribuições legais, que lhe são conferidas.</p>
+                </div>
+
+                <div class="resolve-text" style="text-align: center; text-transform: uppercase; font-weight: bold; margin-bottom: 20px;">
+                    <p>RESOLVE</p>
+                </div>
+
+                <div class="infopen-text" style="margin-bottom: 20px;">
+                    <p><b>INFOPEN: ${infopen}</b></p>
+                </div>
+
+                <div class="text-body" style="text-align: justify; margin-bottom: 20px; line-height: 1.4;">
+                    <p>Conceder o Benefício de Saída Temporária, em cumprimento a Ordem de Serviço n° 01/2022/VEP/STM, prolatada pelo Dr. <b>FLÁVIO OLIVEIRA LAUANDE</b>, Juiz de Direito Titular da VEP/STM, para o apenado: <b>${nome}</b>, no período de <b>${dataSaida}</b> a <b>${dataRetorno}</b>, devendo o mesmo, apresentar-se nesta Casa Penal no dia <b>${dataRetorno}</b> até as <b>${horaRetorno}</b>.</p>
+                </div>
+
+                <div class="clausula" style="text-align: right; margin-bottom: 30px;">
+                    <p>Dê-se Ciência, Registre-se e Cumpra-se.</p>
+                </div>
+
+                <div class="date-location" style="text-align: right; margin-bottom: 40px;">
+                    <p>Santarém, ${dataSaidaExtenso}.</p>
+                </div>
+
+                <div class="signature-area" style="text-align: center; margin-bottom: 40px;">
+                    <img src="assinatura-diretor.png" style="width: 500px; height: auto;">
+                </div>
+
+                <div style="width: 100%; margin-top: 120px;">
+                    <div style="margin-bottom: 30px;">
+                        <div style="display: flex; align-items: flex-end;">
+                            <span style="font-weight: bold;">SAÍDA: &nbsp; ${dataSaida}</span>
+                            <div style="flex-grow: 1; border-bottom: 1px solid black; margin: 0 10px; height: 1px;"></div>
+                            <span style="font-weight: bold;">Hora: ________</span>
+                        </div>
+                        <div style="text-align: center; margin-top: 5px;">
+                            <span style="font-weight: bold; font-size: 10pt;">${nome}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display: flex; align-items: flex-end;">
+                            <span style="font-weight: bold;">RETORNO: &nbsp; ${dataRetorno}</span>
+                            <div style="flex-grow: 1; border-bottom: 1px solid black; margin: 0 10px; height: 1px;"></div>
+                            <span style="font-weight: bold;">Hora: ________</span>
+                        </div>
+                        <div style="text-align: center; margin-top: 5px;">
+                            <span style="font-weight: bold; font-size: 10pt;">${nome}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            printArea.appendChild(page);
+        });
+
+        // Configurações agressivas para evitar páginas extras
+        const opt = {
+            margin: 0,
+            filename: `Portarias_${numPortaria.replace('/', '-')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                letterRendering: true,
+                scrollY: 0 
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: 'avoid-all' } // Evita quebras automáticas indesejadas
+        };
+
+        // Execução
+        html2pdf().set(opt).from(printArea).save().then(() => {
+            printArea.style.display = 'none';
+        });
+    }
+</script>    
+
+
+
+</body>
+</html>

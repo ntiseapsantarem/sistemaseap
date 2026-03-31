@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Visualização de Escala</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../style.css">
+
+</head>
+<body>
+
+<!--  NAVBAR -->
+    <div class="navbar">
+        
+        <div class="navbar-left">
+            <img src="../img/logo.png" class="logo">
+
+            <div>
+                <div class="title-left">SEAP-PA</div>
+                <div class="badge">SANTARÉM</div>
+            </div>
+        </div>
+
+        <div class="navbar-center">
+            SECRETARIA DE ESTADO DE<br>
+            ADMINISTRAÇÃO PENITENCIÁRIA
+        </div>
+
+        <div class="navbar-right" onclick="irHome()"><img src="../img/casa.png" class="logo"></div>
+
+    </div>
+
+    <div class="conteudo">
+        <div class="header"><h1>Informações TI</h1></div>
+
+    <!-- CARD INFORMATIVOS -->
+        <div class="comando-card">
+            <div class="comando-header">
+                <div class="left">
+                    <div>
+                        <div class="duty-officer">Importante</div>
+                        <p>Informações importantes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comando-body">
+                
+            </div>
+        </div>
+
+    <!-- CARD ESCALA -->
+        <div class="comando-card">
+            <div class="comando-header">
+                    <div class="left">
+                        <div>
+                            <div class="duty-officer"> Plantonista do dia: <span id="current-duty" class="highlight">---</span><span id="current-phone" class="phone"></span></div>
+                            <p>Escala do mês</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="comando-body">
+                    <h3 id="month-label"></h3>
+
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>DOM</th><th>SEG</th><th>TER</th><th>QUA</th><th>QUI</th><th>SEX</th><th>SAB</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                    </table>
+                </div>
+        </div>
+
+    <!-- CARD CHAMADOS -->
+        <div class="comando-card">
+            <div class="comando-header">
+                <div class="left">
+                    <div>
+                        <div class="duty-officer">Chamados</div>
+                        <p>Abertura de Chamados</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comando-body">
+                Todas as atividades referentes a trabalhos da equipe de TI devem ter um chamado aberto!</br> 
+                Para abrir seu chamado leia o QR-Code Abaixo. </br> 
+                No Whatsapp preencha as informações conforme o exemplo </br> </br>
+                <img src="../img/nti.png" style="width: 500px; height: auto;"> </br> </br>
+                Nos finais de semana os chamados tem que ser abertos e encaminhados para o plantão NTI +55 91 8416-0049 </br>
+                Lembre-se de sempre avisar o tecnico de sobreaviso, que sempre estará identificado na aba acima da escala. </br> </br>
+            </div>
+        </div>
+    
+    <!-- PLANTÃO BELEM -->
+        <div class="comando-card">
+            <div class="comando-header">
+                <div class="left">
+                    <div>
+                        <div class="duty-officer">
+                    Plantão Belém
+                    </div>
+                        <p>Contato do plantão de Belém</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comando-body">
+                Nos finais de semana temos uma equipe de plantão do NTI de Belém no contato +55 91 8416-0049 <br/> 
+            </div>
+        </div>
+
+    <!-- CARD CHAMADOS INFOPEN -->
+        <div class="comando-card">
+            <div class="comando-header">
+                <div class="left">
+                    <div>
+                        <div class="duty-officer">Chamados Infopen</div>
+                        <p>Solicitações Infopen</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comando-body">
+                Leia o QR-Code abaixo, no Whatsapp preencha as informações conforme o exemplo abaixo e envie.</br> </br>
+                <img src="infopen.png" style="width: 500px; height: auto;"> </br> </br>
+                Após envio da mensagem encaminhe </br>
+                𑇐 foto ou scanner do formulário preenchido a caneta contendo assisnatura da direção ou coordenação do complexo penitenciário </br>
+                𑇐 foto do RG ou funcional </br>
+                Lembre-se de sempre avisar o tecnico de sobreaviso, que sempre estará identificado na aba acima da escala. </br> </br>
+            </div>
+        </div>
+
+<script src="expandir-card.js"></script>
+<script>
+
+const now = new Date();
+let data = {};
+let equipe = [];
+
+// Carregar dados do servidor
+fetch('carregar.php')
+    .then(res => res.json())
+    .then(json => {
+        data = json.escalaTI || {};
+        equipe = json.equipeTI || [];
+        renderView();
+    });
+
+function renderView() {
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+
+    const monthNames = [
+        "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+        "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+    ];
+    document.getElementById("month-label").innerText =
+        `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+
+    let html = '<tr>';
+
+    for (let i = 0; i < firstDay; i++) html += '<td></td>';
+
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        const currentWeekDay = (day + firstDay - 1) % 7;
+
+        if (currentWeekDay === 0 && day > 1) html += '</tr><tr>';
+
+        const dateKey = `${now.getFullYear()}-${now.getMonth()}-${day}`;
+        const name = data[dateKey] || "";
+        const isToday = day === now.getDate() ? 'class="today"' : '';
+        const isWeekend = (currentWeekDay === 0 || currentWeekDay === 6);
+
+        let cellContent = `<span class="tech-name ${isWeekend ? 'weekend-name' : ''}">${name}</span>`;
+
+        if (isWeekend && name) {
+            cellContent += `<span class="weekend-text">SOBREAVISO</span>`;
+        }
+
+        html += `<td ${isToday}>
+                    <span class="day-number">${day}</span>
+                    ${cellContent}
+                </td>`;
+
+        // Atualiza o topo
+        if (day === now.getDate()) {
+            document.getElementById('current-duty').innerText = name || "Nenhum escalado";
+            const tecnico = equipe.find(t => t.nome === name);
+            document.getElementById('current-phone').innerText =
+                tecnico ? ` - Tel: ${tecnico.tel}` : "";
+        }
+    }
+
+    document.getElementById('calendar-body').innerHTML = html + '</tr>';
+}
+function irHome() {
+    window.location.href = "../index.html";
+}
+  
+</script>
+
+</body>
+</html>

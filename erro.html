@@ -1,0 +1,104 @@
+<!DOCTYPE html> 
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Site SEAP Santarém</title>
+<link rel="icon" href="img/logo.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+
+<style>
+    /* CARDS */
+    .cards {
+        display: flex;
+        gap: 40px;
+    }
+
+    .card {
+        width: 260px;
+        height: 180px;
+        background: linear-gradient(145deg, #20363b, #16282c);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+
+    /* brilho */
+    .card::before {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 200%;
+        background: rgba(255,255,255,0.2);
+        top: -50%;
+        left: -100%;
+        transform: rotate(25deg);
+        opacity: 0;
+    }
+
+    /* hover */
+    .card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+
+    .card:hover::before {
+        opacity: 1;
+        animation: brilho 1s forwards;
+    }
+
+    @keyframes brilho {
+        from {
+            transform: translateX(-100%) rotate(25deg);
+        }
+        to {
+            transform: translateX(250%) rotate(25deg);
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!--  NAVBAR -->
+<div class="navbar">
+    
+    <div class="navbar-left">
+        <img src="img/logo.png" class="logo">
+
+        <div>
+            <div class="title-left">SEAP-PA</div>
+            <div class="badge">SANTARÉM</div>
+        </div>
+    </div>
+
+    <div class="navbar-center">
+        SECRETARIA DE ESTADO DE<br>
+        ADMINISTRAÇÃO PENITENCIÁRIA
+    </div>
+
+    <div class="navbar-right" onclick="irHome()"><img src="img/casa.png" class="logo"></div>
+
+</div>
+
+<!-- CONTEÚDO -->
+<div class="main">
+    <h1>Estamos temporariamente indisponiveis, tente mais tarde.</h1>
+</div>
+
+<script>
+
+function irHome() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

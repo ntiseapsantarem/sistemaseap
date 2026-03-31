@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Admin - SEAP</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+:root { --bg: #2d3e40; --green: #2ecc71; --card: #263537; }
+
+body {
+    display: none;
+    background-color: var(--bg);
+    color: white;
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+.section {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+}
+
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #444; padding: 8px; text-align: center; }
+
+select {
+    background: #3d4e50;
+    color: var(--green);
+    border: 1px solid #555;
+    width: 100%;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.tech-item {
+    background: #34495e;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-flex;
+}
+
+.btn-del {
+    background: none;
+    border: none;
+    color: #ff7675;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+input {
+    padding: 8px;
+    background: #1e2a2b;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 4px;
+}
+
+.btn-add {
+    background: var(--green);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="section">
+    <h2>Calendário de Escala</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>DOM</th><th>SEG</th><th>TER</th><th>QUA</th><th>QUI</th><th>SEX</th><th>SAB</th>
+            </tr>
+        </thead>
+        <tbody id="editor-body"></tbody>
+    </table>
+
+    <br>
+    <button class="btn-add" onclick="saveData()">SALVAR ESCALA</button>
+</div>
+
+<div class="section">
+    <h2>Equipe</h2>
+
+    <div id="tech-list"></div>
+
+    <div class="input-group">
+        <input type="text" id="t-name" placeholder="Nome">
+        <input type="text" id="t-phone" placeholder="Telefone">
+        <button class="btn-add" onclick="addTech()">Adicionar</button>
+    </div>
+</div>
+
+<script>
+const SENHA_CORRETA = "#dti_sup#!";
+
+function validarAcesso() {
+    const senha = prompt("Digite a senha:");
+    if (senha === SENHA_CORRETA) {
+        document.body.style.display = "block";
+        carregarDados();
+    } else {
+        alert("Senha incorreta!");
+        window.location.href = "ti.html";
+    }
+}
+
+let techs = [];
+let escala = {};
+const now = new Date();
+
+function carregarDados() {
+    fetch('carregar.php')
+        .then(res => res.json())
+        .then(json => {
+            techs = json.equipeTI || [];
+            escala = json.escalaTI || {};
+            updateTechList();
+        });
+}
+
+function updateTechList() {
+    const container = document.getElementById('tech-list');
+
+    container.innerHTML = techs.map((t, i) => `
+        <div class="tech-item">
+            ${t.nome} (${t.tel})
+            <button class="btn-del" onclick="removeTech(${i})">X</button>
+        </div>
+    `).join('');
+
+    renderEditor();
+}
+
+function addTech() {
+    const nome = document.getElementById('t-name').value;
+    const tel = document.getElementById('t-phone').value;
+
+    if (nome && tel) {
+        techs.push({ nome, tel });
+        document.getElementById('t-name').value = '';
+        document.getElementById('t-phone').value = '';
+        updateTechList();
+    }
+}
+
+function removeTech(i) {
+    techs.splice(i, 1);
+    updateTechList();
+}
+
+function renderEditor() {
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+
+    let html = '<tr>';
+
+    for (let i = 0; i < firstDay; i++) html += '<td></td>';
+
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        if ((day + firstDay - 1) % 7 === 0 && day > 1) html += '</tr><tr>';
+
+        const dateKey = `${now.getFullYear()}-${now.getMonth()}-${day}`;
+        const selected = escala[dateKey] || "";
+
+        let options = `<option value="">--</option>` +
+            techs.map(t =>
+                `<option value="${t.nome}" ${t.nome === selected ? 'selected' : ''}>
+                    ${t.nome}
+                </option>`
+            ).join('');
+
+        html += `
+            <td>
+                <small>${day}</small>
+                <select data-date="${dateKey}">
+                    ${options}
+                </select>
+            </td>
+        `;
+    }
+
+    document.getElementById('editor-body').innerHTML = html + '</tr>';
+}
+
+function saveData() {
+    document.querySelectorAll('select').forEach(s => {
+        escala[s.dataset.date] = s.value;
+    });
+
+    fetch('salvar.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            escalaTI: escala,
+            equipeTI: techs
+        })
+    }).then(() => alert("Salvo com sucesso!"));
+}
+
+window.onload = validarAcesso;
+</script>
+
+</body>
+</html>

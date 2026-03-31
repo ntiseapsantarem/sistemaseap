@@ -1,0 +1,293 @@
+/* ------------------------------------- 
+---------------CONF GERAL---------------
+---------------------------------------- */
+body { 
+background-color: #2d3e40; 
+color: white; 
+font-family: 'Segoe UI', 
+sans-serif; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+   
+.header { 
+display: flex; 
+align-items: 
+center; 
+margin-bottom: 20px; 
+}
+        
+h1 { 
+font-size: 1.8rem; 
+margin: 0; 
+text-transform: uppercase; 
+font-weight: 800; 
+}
+
+.conteudo { 
+    margin: 40px; 
+}
+
+/* ------------------------------------- 
+-----------------NAV BAR----------------
+---------------------------------------- */
+.navbar {
+    width: 100%;
+    background: linear-gradient(to right, #1f2f33, #2f4348);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+}
+
+/* LADO ESQUERDO HEADER */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo {
+    width: 40px;
+}
+
+.title-left {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.badge {
+    background-color: #1db954;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 8px;
+    margin-top: 2px;
+    display: inline-block;
+}
+
+/* CENTRO HEADER */
+.navbar-center {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* DIREITA HEADER */
+.navbar-right {
+    font-size: 30px;
+    cursor: pointer;
+}
+/* ===== CONTEÚDO ===== */
+.main {
+    height: calc(100vh - 90px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ------------------------------------- 
+---------------PAGE INDEX---------------
+---------------------------------------- */
+.card {
+    width: 200px;
+    height: 150px;
+    background: linear-gradient(145deg, #26383d, #1e2c30);
+    border-radius: 20px;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+	}
+
+/* Efeito de brilho */
+.card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.15),
+        transparent
+    );
+    transform: rotate(25deg);
+    opacity: 0;
+    transition: 0.5s;
+}
+
+
+
+
+
+/* ------------------------------------- 
+-----------------PAGE TI----------------
+---------------------------------------- */
+
+
+.comando-card {
+    background: linear-gradient(145deg, #314950, #354f57);
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* brilho */
+.comando-card::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    top: -50%;
+    left: -100%;
+    transform: rotate(25deg);
+    opacity: 0;
+}
+
+/* hover */
+.comando-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+.comando-card:hover::before {
+    opacity: 0.5;
+    animation: brilho 1s forwards;
+}
+
+@keyframes brilho {
+    from {
+        transform: translateX(-100%) rotate(10deg);
+    }
+    to {
+        transform: translateX(250%) rotate(10deg);
+    }
+}
+@keyframes sembrilho {
+    from {
+        transform: translateX(0%) rotate(0deg);
+    }
+    to {
+        transform: translateX(0%) rotate(0deg);
+    }
+}
+
+
+.comando-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* BODY (colapsado) */
+.comando-body {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 15px;
+    background: linear-gradient(145deg, #26383d, #1e2c30);
+    transition: max-heigyh 0.4s ease, padding 0.3s;
+}
+
+/* QUANDO ABERTO */
+.comando-card.active .comando-body {
+    max-height: 500px;
+    padding: 15px;
+    animation: sembrilho 1s forwards;
+}
+
+/* SUB CARDS */
+.sub {
+    margin-top: 15px;
+}
+
+.sub-card {
+    background: #eee;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.duty-officer { 
+font-size: 1.3rem; 
+margin: 5px 0; 
+font-weight: bold; }
+        
+.highlight { 
+color: #2ecc71; 
+}
+        
+.phone { 
+color: #88c999; 
+font-size: 1.1rem; 
+margin-left: 15px; 
+font-style: italic; 
+}
+  
+table { 
+width: 100%; 
+max-width: 650px; 
+border-collapse: collapse; 
+}
+        
+th, td { 
+border: 1px solid rgba(255,255,255,0.1); 
+width: 14.2%; 
+height: 40px; 
+text-align: center; 
+vertical-align: top; 
+padding: 10px; 
+}
+        
+.day-number { 
+display: block; 
+font-size: 0.6rem; 
+opacity: 0.5; 
+text-align: right; ]
+}
+	
+th { height: 20px; }
+        
+.tech-name { 
+color: #2ecc71; 
+font-weight: bold; 
+margin-top: 5px; 
+display: block; 
+font-size: 0.7rem; 
+}
+        
+.weekend-text { 
+color: #1b5e20; 
+font-size: 0.70rem; 
+font-weight: bold; 
+text-transform: uppercase; 
+margin-top: 4px; 
+display: block; }
+        
+.weekend-name { color: #228b22; opacity: 0.8; }
+        
+.today { border: 2px solid #2ecc71; background: rgba(46, 204, 113, 0.05); }
+
+
