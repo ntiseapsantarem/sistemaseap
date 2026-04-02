@@ -107,8 +107,8 @@ input {
     </div>
 </div>
 
-<script type="module">
-const SENHA_CORRETA = "tiseap";
+<script>
+    const SENHA_CORRETA = "tiseap";
 
 function validarAcesso() {
     const senha = prompt("Digite a senha:");
@@ -120,6 +120,9 @@ function validarAcesso() {
         window.location.href = "ti.html";
     }
 }
+</script>
+
+<script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
