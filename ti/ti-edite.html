@@ -107,7 +107,7 @@ input {
     </div>
 </div>
 
-<script>
+<script type="module">
 const SENHA_CORRETA = "tiseap";
 
 function validarAcesso() {
@@ -121,18 +121,45 @@ function validarAcesso() {
     }
 }
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "SUA_CHAVE",
+  authDomain: "SEU_DOMINIO",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_BUCKET",
+  messagingSenderId: "SEU_ID",
+  appId: "SEU_APP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let techs = [];
 let escala = {};
 const now = new Date();
 
-function carregarDados() {
-    fetch('carregar.php')
-        .then(res => res.json())
-        .then(json => {
-            techs = json.equipeTI || [];
-            escala = json.escalaTI || {};
-            updateTechList();
-        });
+async function carregarDados() {
+
+    const docRef = doc(db, "ti", "dados");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+
+        const json = docSnap.data();
+
+        techs = json.equipeTI || [];
+        escala = json.escalaTI || {};
+
+        updateTechList();
+    }
 }
 
 function updateTechList() {
@@ -205,17 +232,22 @@ function saveData() {
         escala[s.dataset.date] = s.value;
     });
 
-    fetch('salvar.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            escalaTI: escala,
-            equipeTI: techs
-        })
-    }).then(() => alert("Salvo com sucesso!"));
+    async function saveData() {
+
+    document.querySelectorAll('select').forEach(s => {
+        escala[s.dataset.date] = s.value;
+    });
+
+    await setDoc(doc(db, "ti", "dados"), {
+        escalaTI: escala,
+        equipeTI: techs
+    });
+
+    alert("Salvo com sucesso!");
+    }
 }
 
-window.onload = validarAcesso;
+window.onload = () => validarAcesso();
 </script>
 
 </body>
