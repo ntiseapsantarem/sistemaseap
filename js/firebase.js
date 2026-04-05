@@ -246,7 +246,7 @@ window.renderView = function() {
 
         html += `
         <td>
-            <b class="day-number">${day}</b><br>
+            <b class="day-number">${day}</b>
             <p class="tech-name">${nome}</p>
             <p class="weekend-text">${sobreaviso}</p>
         </td>
