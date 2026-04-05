@@ -10,25 +10,6 @@
 <style>
 :root { --bg: #2d3e40; --green: #2ecc71; --card: #263537; }
 
-body {
-    display: none;
-    background-color: var(--bg);
-    color: white;
-    font-family: sans-serif;
-    padding: 20px;
-}
-
-.section {
-    background: var(--card);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #444;
-}
-
-table { width: 100%; border-collapse: collapse; }
-th, td { border: 1px solid #444; padding: 8px; text-align: center; }
-
 select {
     background: #3d4e50;
     color: var(--green);
@@ -81,33 +62,67 @@ input {
 
 <body>
 
-<div class="section">
-    <h2>Calendário de Escala</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>DOM</th><th>SEG</th><th>TER</th><th>QUA</th><th>QUI</th><th>SEX</th><th>SAB</th>
-            </tr>
-        </thead>
-        <tbody id="editor-body"></tbody>
-    </table>
+<!--  NAVBAR -->
+    <div class="navbar">
+        
+        <div class="navbar-left">
+            <img src="../img/logo.png" class="logo">
 
-    <br>
-    <button class="btn-add" onclick="saveData()">SALVAR ESCALA</button>
-</div>
+            <div>
+                <div class="title-left">SEAP-PA</div>
+                <div class="badge">SANTARÉM</div>
+            </div>
+        </div>
 
-<div class="section">
-    <h2>Equipe</h2>
+        <div class="navbar-center">
+            SECRETARIA DE ESTADO DE<br>
+            ADMINISTRAÇÃO PENITENCIÁRIA
+        </div>
 
-    <div id="tech-list"></div>
+        <div class="navbar-right" onclick="irHome()"><img src="../img/casa.png" class="logo"></div>
 
-    <div class="input-group">
-        <input type="text" id="t-name" placeholder="Nome">
-        <input type="text" id="t-phone" placeholder="Telefone">
-        <button class="btn-add" onclick="addTech()">Adicionar</button>
-    </div>
-</div>
+    </div>    
 
+<!-- CARD INFORMATIVOS -->
+    <div class="conteudo">     
+        <div class="comando-card">
+            <div class="comando-header">
+                <div class="left">
+                    <div>
+                        <div class="duty-officer">Importante</div>
+                        <p>Informações importantes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="comando-body">
+                <h2>Calendário de Escala</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DOM</th><th>SEG</th><th>TER</th><th>QUA</th><th>QUI</th><th>SEX</th><th>SAB</th>
+                        </tr>
+                    </thead>
+                    <tbody id="editor-body"></tbody>
+                </table>
+
+                <br>
+                <button class="btn-add" onclick="saveData()">SALVAR ESCALA</button></br></br>
+            
+                <h2>Equipe</h2>
+
+                <div id="tech-list"></div>
+
+                <div class="input-group">
+                    <input type="text" id="t-name" placeholder="Nome">
+                    <input type="text" id="t-phone" placeholder="Telefone">
+                    <button class="btn-add" onclick="addTech()">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>   
+
+<script src="../js/expandir-card.js"></script>
+<script src="../js/page.js"></script>
 <script>
     const SENHA_CORRETA = "tiseap";
 
