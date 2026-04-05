@@ -140,45 +140,7 @@
 </script>
 
 
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-    apiKey: "AIzaSyDiG3e1jnxmEhrEPQa4eHfx9SamU0uOKec",
-    authDomain: "sistemas-seap.firebaseapp.com",
-    projectId: "sistemas-seap",
-    storageBucket: "sistemas-seap.firebasestorage.app",
-    messagingSenderId: "74108776838",
-    appId: "1:74108776838:web:a726df977c46511a3cfc07"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const now = new Date();
-    let data = {};
-    let equipe = [];
-
-    // Carregar dados do servidor
-    async function carregarDados() {
-
-        const docRef = doc(db, "ti", "dados");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            const json = docSnap.data();
-
-            data = json.escalaTI || {};
-            equipe = json.equipeTI || [];
-        }
-
-        renderView();
-    }
-
-    carregarDados();
-
+<script>
     function renderView() {
         const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
         const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
@@ -232,6 +194,14 @@ function irHome() {
     window.location.href = "../index.html";
 }
   
+</script>
+
+<script type="module" src="firebase.js"></script>
+
+<script>
+window.onload = () => {
+    carregarEscalaView();
+}
 </script>
 
 </body>
