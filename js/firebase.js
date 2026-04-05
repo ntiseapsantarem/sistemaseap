@@ -131,16 +131,16 @@ function gerarTabela() {
 
         html += `
         <td>
-            <b>${day}</b><br>
+            <b class="day-number">${day}</b><br>
 
-            <select id="tech-${day}">
+            <select id="tech-${day}" class="tech-name">
                 <option value="">Selecionar</option>
                 ${equipe.map(t => `<option value="${t.nome}">${t.nome}</option>`).join("")}
             </select>
 
             <br>
 
-            <label>
+            <label class="weekend-text">
                 <input type="checkbox" id="sobreaviso-${day}">
                 SOBREAVISO
             </label>
@@ -246,9 +246,9 @@ window.renderView = function() {
 
         html += `
         <td>
-            <b>${day}</b><br>
-            ${nome}
-            ${sobreaviso}
+            <b class="day-number">${day}</b><br>
+            <b class="tech-name">${nome}</b><br>
+            <b class="weekend-text">${sobreaviso}</b><br>
         </td>
         `;
 
