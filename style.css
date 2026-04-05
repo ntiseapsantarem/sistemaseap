@@ -223,7 +223,7 @@ font-weight: 800;
 
 /* QUANDO ABERTO */
 .comando-card.active .comando-body {
-    max-height: 500px;
+    max-height: 1000px;
     padding: 15px;
     animation: sembrilho 1s forwards;
 }
@@ -258,13 +258,13 @@ font-style: italic;
   
 table { 
 width: 100%; 
-max-width: 650px; 
+max-width: 750px; 
 border-collapse: collapse; 
 }
         
 th, td { 
 border: 1px solid rgba(255,255,255,0.1); 
-width: 14.2%; 
+width: 100PX; 
 height: 40px; 
 text-align: center; 
 vertical-align: top; 
