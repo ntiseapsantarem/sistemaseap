@@ -262,11 +262,11 @@ function renderAny(lista) {
 
         div.innerHTML += `
             <div class="card-any">
-                <div onclick="any(${item.id})">
-                    ${item.nome} <br>
-                    <label class="weekend-text">${item.id}</label>
+                <div class="card-content" onclick="any(${item.id})">
+                    <span class="card-title">${item.nome}</span>
+                    <span class="card-id">${item.id}</span>
                 </div>
-                <button class="btn-del" onclick="removerAny('${item.key}')">X</button>
+                <button class="btn-del" onclick="removerAny('${item.key}')">×</button>
             </div>
         `;
     });
