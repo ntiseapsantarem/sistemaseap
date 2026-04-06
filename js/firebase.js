@@ -18,6 +18,8 @@ let equipe = [];
 let escala = {};
 const now = new Date();
 
+window.addAny = addAny;
+window.removerAny = removerAny;
 window.addTech = addTech;
 window.saveData = saveData;
 window.carregarDados = carregarDados;
@@ -208,6 +210,72 @@ window.carregarEscalaView = function() {
         });
     });
 };
+
+/* ================================
+   ANYDESK
+================================ */
+function addAny() {
+
+    const nome = document.getElementById("any-nome").value;
+    const id = document.getElementById("any-id").value;
+
+    if (!nome || !id) {
+        alert("Preencha nome e ID");
+        return;
+    }
+
+    const refAny = ref(db, "anydesk");
+    const novo = push(refAny);
+
+    set(novo, {
+        nome: nome,
+        id: id
+    });
+
+    document.getElementById("any-nome").value = "";
+    document.getElementById("any-id").value = "";
+}
+
+const anyRef = ref(db, "anydesk");
+
+onValue(anyRef, (snapshot) => {
+
+    let lista = [];
+
+    snapshot.forEach(child => {
+        lista.push({
+            key: child.key,
+            ...child.val()
+        });
+    });
+
+    renderAny(lista);
+});
+
+function renderAny(lista) {
+
+    const div = document.getElementById("any-list");
+
+    div.innerHTML = "";
+
+    lista.forEach(item => {
+
+        div.innerHTML += `
+            <div class="card-any">
+                <div onclick="any(${item.id})">
+                    ${item.nome} <br>
+                    <label class="weekend-text">${item.id}</label>
+                </div>
+                <button class="btn-del" onclick="removerAny('${item.key}')">X</button>
+            </div>
+        `;
+    });
+}
+
+function removerAny(id) {
+    remove(ref(db, "anydesk/" + id));
+}
+
 
 /* ================================
    RENDER VIEW

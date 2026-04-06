@@ -95,6 +95,7 @@ font-weight: 800;
 ---------------PAGE INDEX---------------
 ---------------------------------------- */
 /* CARDS-INDEX */
+
 .cards-index {
     display: flex;
     gap: 40px;
@@ -140,6 +141,48 @@ font-weight: 800;
     opacity: 1;
     animation: brilho 1s forwards;
 }
+
+/* CARDS-ANYDESK */
+.cards-any {
+    display: flex;
+    gap: 40px;
+}
+
+.card-any {
+    position: relative;
+    padding: 10px;
+}
+
+.card-any .btn-del {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+/* brilho */
+.card-any::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 200%;
+    background: rgba(255,255,255,0.2);
+    top: -50%;
+    left: -100%;
+    transform: rotate(25deg);
+    opacity: 0;
+}
+
+/* hover */
+.card-any:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+.card-any:hover::before {
+    opacity: 1;
+    animation: brilho 1s forwards;
+}
+
 
 
 /* ------------------------------------- 
