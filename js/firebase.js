@@ -276,6 +276,8 @@ function removerAny(id) {
     remove(ref(db, "anydesk/" + id));
 }
 
+<script type="module" src="../js/page.js"></script>
+
 
 /* ================================
    RENDER VIEW
