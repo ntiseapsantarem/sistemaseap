@@ -1,14 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getDatabase, ref, set, push, remove, onValue, get } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+import { getDatabase, ref, set, push, remove, onValue } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDiG3e1jnxmEhrEPQa4eHfx9SamU0uOKec",
+  apiKey: "AIzaSy...",
   authDomain: "sistemas-seap.firebaseapp.com",
+  databaseURL: "https://sistemas-seap-default-rtdb.firebaseio.com",
   projectId: "sistemas-seap",
   storageBucket: "sistemas-seap.firebasestorage.app",
   messagingSenderId: "74108776838",
-  appId: "1:74108776838:web:a726df977c46511a3cfc07",
-  databaseURL: "https://sistemas-seap-default-rtdb.firebaseio.com"
+  appId: "1:74108776838:web:a726df977c46511a3cfc07"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,18 +18,21 @@ let equipe = [];
 let escala = {};
 const now = new Date();
 
-window.addAny = addAny;
-window.removerAny = removerAny;
+/* ================================
+   EXPOR FUNÇÕES
+================================ */
 window.addTech = addTech;
+window.removerTech = removerTech;
 window.saveData = saveData;
 window.carregarDados = carregarDados;
+window.carregarEscalaView = carregarEscalaView;
+window.addAny = addAny;
+window.removerAny = removerAny;
 
 /* ================================
    ADICIONAR TECNICO
 ================================ */
-
 function addTech() {
-
     const nome = document.getElementById("t-name").value;
     const tel = document.getElementById("t-phone").value;
 
@@ -38,34 +41,33 @@ function addTech() {
         return;
     }
 
-    const equipeRef = ref(db, "equipeTI");
-    const novoTech = push(equipeRef);
+    const novo = push(ref(db, "equipeTI"));
 
-    set(novoTech, {
-        nome: nome,
-        tel: tel
-    });
+    set(novo, { nome, tel });
 
     document.getElementById("t-name").value = "";
     document.getElementById("t-phone").value = "";
 }
 
 /* ================================
-   CARREGAR DADOS
+   REMOVER TECNICO
 ================================ */
+function removerTech(id) {
+    remove(ref(db, "equipeTI/" + id));
+}
 
+/* ================================
+   CARREGAR DADOS (PAINEL)
+================================ */
 function carregarDados() {
 
-    const equipeRef = ref(db, "equipeTI");
-
-    onValue(equipeRef, (snapshot) => {
-
+    onValue(ref(db, "equipeTI"), (snap) => {
         equipe = [];
 
-        snapshot.forEach(child => {
+        snap.forEach(c => {
             equipe.push({
-                id: child.key,
-                ...child.val()
+                id: c.key,
+                ...c.val()
             });
         });
 
@@ -73,47 +75,38 @@ function carregarDados() {
         gerarTabela();
     });
 
-    const escalaRef = ref(db, "escalaTI");
-
-    onValue(escalaRef, (snapshot) => {
-        escala = snapshot.val() || {};
+    onValue(ref(db, "escalaTI"), (snap) => {
+        escala = snap.val() || {};
+        gerarTabela(); // 🔥 atualiza tabela com dados salvos
     });
 }
 
 /* ================================
    RENDER EQUIPE
 ================================ */
-
 function renderEquipe() {
 
     const div = document.getElementById("tech-list");
+    if (!div) return;
 
     div.innerHTML = "";
 
-    equipe.forEach(tech => {
-
+    equipe.forEach(t => {
         div.innerHTML += `
             <div class="tech-item">
-                ${tech.nome} - ${tech.tel}
-                <button class="btn-del" onclick="removerTech('${tech.id}')">X</button>
+                ${t.nome} - ${t.tel}
+                <button class="btn-del" onclick="removerTech('${t.id}')">X</button>
             </div>
         `;
     });
 }
 
-window.removerTech = function(id) {
-
-    remove(ref(db, "equipeTI/" + id));
-};
-
 /* ================================
-   GERAR TABELA
+   GERAR TABELA (COM DADOS)
 ================================ */
-
 function gerarTabela() {
 
     const tbody = document.getElementById("editor-body");
-
     if (!tbody) return;
 
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
@@ -126,24 +119,28 @@ function gerarTabela() {
     for (let day = 1; day <= daysInMonth; day++) {
 
         const weekDay = (day + firstDay - 1) % 7;
-
         if (weekDay === 0 && day > 1) html += "</tr><tr>";
 
         const key = `${now.getFullYear()}-${now.getMonth()}-${day}`;
+        const dado = escala[key] || {};
 
         html += `
         <td>
-            <b class="day-number">${day}</b><br>
+            <b>${day}</b><br>
 
-            <select id="tech-${day}" class="tech-name">
+            <select id="tech-${day}">
                 <option value="">Selecionar</option>
-                ${equipe.map(t => `<option value="${t.nome}">${t.nome}</option>`).join("")}
+                ${equipe.map(t => `
+                    <option value="${t.nome}" ${dado.nome === t.nome ? "selected" : ""}>
+                        ${t.nome}
+                    </option>
+                `).join("")}
             </select>
 
             <br>
 
-            <label class="weekend-text">
-                <input type="checkbox" id="sobreaviso-${day}">
+            <label>
+                <input type="checkbox" id="sobreaviso-${day}" ${dado.sobreaviso ? "checked" : ""}>
                 SOBREAVISO
             </label>
         </td>
@@ -156,10 +153,8 @@ function gerarTabela() {
 /* ================================
    SALVAR ESCALA
 ================================ */
+async function saveData() {
 
-function saveData() {
-
-    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
     const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 
     let dados = {};
@@ -170,45 +165,82 @@ function saveData() {
         const sobreaviso = document.getElementById(`sobreaviso-${day}`).checked;
 
         if (nome) {
-
             const key = `${now.getFullYear()}-${now.getMonth()}-${day}`;
 
-            dados[key] = {
-                nome: nome,
-                sobreaviso: sobreaviso
-            };
+            dados[key] = { nome, sobreaviso };
         }
     }
 
-    set(ref(db, "escalaTI"), dados);
+    await set(ref(db, "escalaTI"), dados);
 
     alert("Escala salva com sucesso!");
 }
 
 /* ================================
-   CARREGAR ESCALA NA TI.HTML
+   VISUALIZAÇÃO (TI.HTML)
 ================================ */
+function carregarEscalaView() {
 
-window.carregarEscalaView = function() {
-
-    const escalaRef = ref(db, "escalaTI");
-    const equipeRef = ref(db, "equipeTI");
-
-    onValue(equipeRef, (snap) => {
-
+    onValue(ref(db, "equipeTI"), (snap) => {
         equipe = [];
+        snap.forEach(c => equipe.push(c.val()));
 
-        snap.forEach(c => {
-            equipe.push(c.val());
-        });
-
-        onValue(escalaRef, (s) => {
-
+        onValue(ref(db, "escalaTI"), (s) => {
             escala = s.val() || {};
-
             renderView();
         });
     });
+}
+
+/* ================================
+   RENDER VIEW
+================================ */
+window.renderView = function () {
+
+    const tbody = document.getElementById("calendar-body");
+    if (!tbody) return;
+
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+
+    let html = "<tr>";
+
+    for (let i = 0; i < firstDay; i++) html += "<td></td>";
+
+    for (let day = 1; day <= daysInMonth; day++) {
+
+        const weekDay = (day + firstDay - 1) % 7;
+        if (weekDay === 0 && day > 1) html += "</tr><tr>";
+
+        const key = `${now.getFullYear()}-${now.getMonth()}-${day}`;
+        const dado = escala[key];
+
+        let nome = "";
+        let sobreaviso = "";
+
+        if (dado) {
+            nome = dado.nome;
+            if (dado.sobreaviso) sobreaviso = "SOBREAVISO";
+        }
+
+        html += `
+        <td>
+            <b>${day}</b>
+            <p>${nome}</p>
+            <p>${sobreaviso}</p>
+        </td>
+        `;
+
+        if (day === now.getDate()) {
+            document.getElementById("current-duty").innerText = nome || "Nenhum";
+
+            const tech = equipe.find(t => t.nome === nome);
+            document.getElementById("current-phone").innerText =
+                tech ? ` - Tel: ${tech.tel}` : "";
+        }
+    }
+
+    tbody.innerHTML = html + "</tr>";
 };
 
 /* ================================
@@ -224,108 +256,32 @@ function addAny() {
         return;
     }
 
-    const refAny = ref(db, "anydesk");
-    const novo = push(refAny);
+    const novo = push(ref(db, "anydesk"));
 
-    set(novo, {
-        nome: nome,
-        id: id
-    });
+    set(novo, { nome, id });
 
     document.getElementById("any-nome").value = "";
     document.getElementById("any-id").value = "";
 }
 
-const anyRef = ref(db, "anydesk");
-
-onValue(anyRef, (snapshot) => {
-
-    let lista = [];
-
-    snapshot.forEach(child => {
-        lista.push({
-            key: child.key,
-            ...child.val()
-        });
-    });
-
-    renderAny(lista);
-});
-
-function renderAny(lista) {
+onValue(ref(db, "anydesk"), (snap) => {
 
     const div = document.getElementById("any-list");
+    if (!div) return;
 
     div.innerHTML = "";
 
-    lista.forEach(item => {
+    snap.forEach(c => {
+        const item = c.val();
 
         div.innerHTML += `
-            <div class="card-geral" id="any-list" onclick="any(${item.id})">${item.nome}<br>${item.id}</div>
+            <div class="card-geral" onclick="window.location.href='anydesk:${item.id}'">
+                ${item.nome}<br>${item.id}
+            </div>
         `;
     });
-}
+});
 
 function removerAny(id) {
     remove(ref(db, "anydesk/" + id));
 }
-
-<script type="module" src="../js/page.js"></script>
-
-
-/* ================================
-   RENDER VIEW
-================================ */
-
-window.renderView = function() {
-
-    const tbody = document.getElementById("calendar-body");
-
-    if (!tbody) return;
-
-    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
-    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-
-    let html = "<tr>";
-
-    for (let i = 0; i < firstDay; i++) html += "<td></td>";
-
-    for (let day = 1; day <= daysInMonth; day++) {
-
-        const weekDay = (day + firstDay - 1) % 7;
-
-        if (weekDay === 0 && day > 1) html += "</tr><tr>";
-
-        const key = `${now.getFullYear()}-${now.getMonth()}-${day}`;
-
-        const dado = escala[key];
-
-        let nome = "";
-        let sobreaviso = "";
-
-        if (dado) {
-            nome = dado.nome;
-            if (dado.sobreaviso) sobreaviso = "<br>SOBREAVISO";
-        }
-
-        html += `
-        <td>
-            <b class="day-number">${day}</b>
-            <p class="tech-name">${nome}</p>
-            <p class="weekend-text">${sobreaviso}</p>
-        </td>
-        `;
-
-        if (day === now.getDate()) {
-
-            document.getElementById("current-duty").innerText = nome || "Nenhum";
-
-            const tech = equipe.find(t => t.nome === nome);
-
-            document.getElementById("current-phone").innerText =
-                tech ? ` - Tel: ${tech.tel}` : "";
-        }
-    }
-
-    tbody.innerHTML = html + "</tr>";
-};

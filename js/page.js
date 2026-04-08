@@ -21,7 +21,3 @@ function abrirPortaria() {
 function abrirTI() {
     window.location.href = "ti/ti.html";
 }
-
-function any(any) {
-    window.location.href = "anydesk:" + any;
-}
