@@ -30,35 +30,38 @@
 
     </div>
 
-    <div class="conteudo">
+
+<!-- CONTEUDO --> 
+    <div class="div-geral">
         <div class="header"><h1>Informações TI</h1></div>
 
     <!-- CARD INFORMATIVOS -->
-        <div class="comando-card">
-            <div class="comando-header">
+        <div class="card-expansivo">
+            <div class="card-expansivo-btn">
                 <div class="left">
                     <div>
-                        <div class="duty-officer">Importante</div>
+                        <div class="font-1-btn">Importante</div>
                         <p>Informações importantes</p>
                     </div>
                 </div>
             </div>
-            <div class="comando-body">
-                
+            <div class="card-expansivo-expansao">
+
             </div>
         </div>
+    
 
     <!-- CARD ESCALA -->
-        <div class="comando-card">
-            <div class="comando-header">
-                    <div class="left">
-                        <div>
-                            <div class="duty-officer"> Plantonista do dia: <span id="current-duty" class="highlight">---</span><span id="current-phone" class="phone"></span></div>
-                            <p>Escala do mês</p>
-                        </div>
+        <div class="card-expansivo">
+            <div class="card-expansivo-btn">
+                <div class="left">
+                    <div>
+                        <div class="font-1-btn">Plantonista do dia: <span id="current-duty" class="highlight">---</span><span id="current-phone" class="phone"></span></div>
+                        <p>Escala do mês</p>
                     </div>
                 </div>
-                <div class="comando-body">
+            </div>
+            <div class="card-expansivo-expansao">
                     <h3 id="month-label"></h3>
 
                     <table>
@@ -69,76 +72,35 @@
                     </thead>
                     <tbody id="calendar-body"></tbody>
                     </table>
-                </br>
-                </div>
-        </div>
+                </br>                
+            </div>
+        </div>    
+
 
     <!-- CARD CHAMADOS -->
-        <div class="comando-card">
-            <div class="comando-header">
+        <div class="card-expansivo" onclick="chamados()">
+            <div class="card-expansivo-btn">
                 <div class="left">
                     <div>
                         <div class="duty-officer">Chamados</div>
                         <p>Abertura de Chamados</p>
                     </div>
                 </div>
-            </div>
-            <div class="comando-body">
-                Todas as atividades referentes a trabalhos da equipe de TI devem ter um chamado aberto!</br> 
-                Para abrir seu chamado leia o QR-Code Abaixo. </br> 
-                No Whatsapp preencha as informações conforme o exemplo </br> </br>
-                <img src="../img/nti.png" style="width: 500px; height: auto;"> </br> </br>
-                Nos finais de semana os chamados tem que ser abertos e encaminhados para o plantão NTI +55 91 8416-0049 </br>
-                Lembre-se de sempre avisar o tecnico de sobreaviso, que sempre estará identificado na aba acima da escala. </br> </br>
-            </div>
-        </div>
-    
-    <!-- PLANTÃO BELEM -->
-        <div class="comando-card">
-            <div class="comando-header">
-                <div class="left">
-                    <div>
-                        <div class="duty-officer">
-                    Plantão Belém
-                    </div>
-                        <p>Contato do plantão de Belém</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comando-body">
-                Nos finais de semana temos uma equipe de plantão do NTI de Belém no contato +55 91 8416-0049 <br/> 
-            </div>
-        </div>
+            </div>    
+        </div>   
 
-    <!-- CARD CHAMADOS INFOPEN -->
-        <div class="comando-card">
-            <div class="comando-header">
-                <div class="left">
-                    <div>
-                        <div class="duty-officer">Chamados Infopen</div>
-                        <p>Solicitações Infopen</p>
-                    </div>
-                </div>
-            </div>
-            <div class="comando-body">
-                Leia o QR-Code abaixo, no Whatsapp preencha as informações conforme o exemplo abaixo e envie.</br> </br>
-                <img src="../img/infopen.png" style="width: 500px; height: auto;"> </br> </br>
-                Após envio da mensagem encaminhe </br>
-                𑇐 foto ou scanner do formulário preenchido a caneta contendo assisnatura da direção ou coordenação do complexo penitenciário </br>
-                𑇐 foto do RG ou funcional </br>
-                Lembre-se de sempre avisar o tecnico de sobreaviso, que sempre estará identificado na aba acima da escala. </br> </br>
-            </div>
-        </div>
 
-        <div class="comando-card" onclick="tiedite()">
-            <div class="comando-header">
+        <div class="card-expansivo" onclick="tiedite()">
+            <div class="card-expansivo-btn">
                 <div class="left">
                     <div>
-                        <div class="duty-officer">Área Técnica</div>
+                        <div class="font-1-btn">Área Técnica</div>
                         <p>Ferramentas Técnicas</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>    
 
 <script src="../js/expandir-card.js"></script>
 <script src="../js/page.js"></script>

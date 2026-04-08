@@ -261,13 +261,7 @@ function renderAny(lista) {
     lista.forEach(item => {
 
         div.innerHTML += `
-            <div class="card-any">
-                <div class="card-content" onclick="any(${item.id})">
-                    <span class="card-title">${item.nome}</span>
-                    <span class="card-id">${item.id}</span>
-                </div>
-                <button class="btn-del" onclick="removerAny('${item.key}')">×</button>
-            </div>
+            <div class="card-geral" id="any-list" onclick="any(${item.id})">${item.nome}<br>${item.id}</div>
         `;
     });
 }

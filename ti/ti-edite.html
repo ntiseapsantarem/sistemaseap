@@ -84,17 +84,29 @@ input {
     </div>    
 
 <!-- CARD INFORMATIVOS -->
-    <div class="conteudo">     
-        <div class="comando-card">
-            <div class="comando-header">
+    <div class="div-geral">     
+        
+        <div class="card-expansivo" onclick="remoto()">
+            <div class="card-expansivo-btn">
                 <div class="left">
                     <div>
-                        <div class="duty-officer">Escala</div>
+                        <div class="font-1-btn">AnyDesk</div>
+                        <p>Lista para acesso remoto</p>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <div class="card-expansivo">
+            <div class="card-expansivo-btn">
+                <div class="left">
+                    <div>
+                        <div class="font-1-btn">Escala</div>
                         <p>Clique para editar</p>
                     </div>
                 </div>
             </div>
-            <div class="comando-body">
+            <div class="card-expansivo-expansao">
                 <h2>Calendário de Escala</h2>
                 <table>
                     <thead>
@@ -118,30 +130,24 @@ input {
                     <button class="btn-add" onclick="addTech()">Adicionar</button>
                 </div>
             </div>
-        </div>
+        </div>    
 
-
-        <div class="comando-card">
-            <div class="comando-header">
+        <div class="card-expansivo">
+            <div class="card-expansivo-btn">
                 <div class="left">
                     <div>
-                        <div class="duty-officer">AnyDesk</div>
+                        <div class="font-1-btn">AnyDesk</div>
                         <p>Clique para editar</p>
                     </div>
                 </div>
             </div>
-            <div class="comando-body"> 
-                <div class="main"> 
-                    
-                    <div class="cards-any" id="any-list"></div>
-                    <br>
-                    <div class="input-group">
-                        <input type="text" id="any-nome" placeholder="Nome">
-                        <input type="text" id="any-id" placeholder="ID AnyDesk">
-                        <button class="btn-add" onclick="addAny()">Adicionar</button>
-                    </div>
-
-                </div> 
+            <div class="card-expansivo-expansao">
+                <div class="input-group">
+                    <input type="text" id="any-nome" placeholder="Nome">
+                    <input type="text" id="any-id" placeholder="ID AnyDesk">
+                    <button class="btn-add" onclick="addAny()">Adicionar</button>
+                    <button class="btn-del" onclick="removerAny('any-id')">×</button>                    
+                </div>
             </div>
         </div>
 
@@ -162,7 +168,8 @@ input {
             window.location.href = "ti.html";
         }
     }
-window.onload = () => validarAcesso();
+
+    window.onload = () => validarAcesso();
 </script>
 <script type="module" src="../js/firebase.js"></script>
 
