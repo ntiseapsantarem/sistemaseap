@@ -120,69 +120,54 @@
 <script src="../js/expandir-card.js"></script>
 <script src="../js/page.js"></script>
 
-<script>
-    function renderView() {
-        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
-        const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+<script> 
+function renderView() { 
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay(); 
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); 
+    const monthNames = [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho", "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ]; 
+    document.getElementById("month-label").innerText = ${monthNames[now.getMonth()]} ${now.getFullYear()}; 
 
-        const monthNames = [
-            "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-            "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
-        ];
-        document.getElementById("month-label").innerText =
-            `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+    let html = '<tr>'; 
+    
+    for (let i = 0; i < firstDay; i++) html += '<td></td>'; 
+    
+    for (let day = 1; day <= daysInMonth; day++) { 
+        
+        const currentWeekDay = (day + firstDay - 1) % 7; 
 
-        let html = '<tr>';
+        if (currentWeekDay === 0 && day > 1) html += '</tr><tr>'; 
+            const dateKey = ${now.getFullYear()}-${now.getMonth()}-${day}; 
+            const name = data[dateKey] || ""; 
+            const isToday = day === now.getDate() ? 'class="today"' : ''; 
+            const isWeekend = (currentWeekDay === 0 || currentWeekDay === 6); 
+            let cellContent = <span class="tech-name ${isWeekend ? 'weekend-name' : ''}">${name}</span>; 
+        
+        if (isWeekend && name) { 
+            cellContent += <span class="weekend-text">SOBREAVISO</span>; 
+        } 
 
-        for (let i = 0; i < firstDay; i++) html += '<td></td>';
-
-        for (let day = 1; day <= daysInMonth; day++) {
-
-            const currentWeekDay = (day + firstDay - 1) % 7;
-
-            if (currentWeekDay === 0 && day > 1) html += '</tr><tr>';
-
-            const dateKey = `${now.getFullYear()}-${now.getMonth() + 1}-${day}`;
-            const name = data[dateKey] || "";
-            const isToday = day === now.getDate() ? 'class="today"' : '';
-            const isWeekend = (currentWeekDay === 0 || currentWeekDay === 6);
-
-            let cellContent = `<span class="tech-name ${isWeekend ? 'weekend-name' : ''}">${name}</span>`;
-
-            if (isWeekend && name) {
-                cellContent += `<span class="weekend-text">SOBREAVISO</span>`;
-            }
-
-            html += `<td ${isToday}>
-                <span class="day-number">${day}</span>
-                ${cellContent}
-            </td>`;
-
-            // Atualiza o topo
-            if (day === now.getDate()) {
-                document.getElementById('current-duty').innerText = name || "Nenhum escalado";
-                const tecnico = equipe.find(t => t.nome === name);
-                document.getElementById('current-phone').innerText =
-                    tecnico ? ` - Tel: ${tecnico.tel}` : "";
-            }
-        }
-
-        document.getElementById('calendar-body').innerHTML = html + '</tr>';
-}
-
-function irHome() {
-    window.location.href = "../index.html";
-}
-  
-</script>
+        html += <td ${isToday}> 
+            <span class="day-number">${day}</span> 
+            ${cellContent} 
+        </td>; 
+            
+        // Atualiza o topo 
+        if (day === now.getDate()) { 
+            document.getElementById('current-duty').innerText = name || "Nenhum escalado"; 
+            const tecnico = equipe.find(t => t.nome === name); 
+            document.getElementById('current-phone').innerText = tecnico ? - Tel: ${tecnico.tel} : "";
+        } 
+    } 
+    document.getElementById('calendar-body').innerHTML = html + '</tr>'; 
+} 
+                
+                function irHome() { window.location.href = "../index.html"; } 
+                
+            </script>
 
 <script type="module" src="../js/firebase.js"></script>
 
-<script>
-window.onload = () => {
-    carregarEscalaView();
-}
-</script>
+<script> window.onload = () => { carregarEscalaView(); } </script>
 
 </body>
 </html>
