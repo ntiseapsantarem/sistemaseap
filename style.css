@@ -56,6 +56,16 @@ h1 {
     gap: 40px;
 }
 
+.input-search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background: #1e2a2b;
+    color: white;
+}
+
 /* ------------------------------------- 
 -----------------NAV BAR----------------
 ---------------------------------------- */
