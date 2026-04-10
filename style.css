@@ -136,7 +136,26 @@ h1 {
     padding: 20px;
 }
 
-.card-geral .btn-del {
+.card-any{
+    width: 180px;
+    height: 100px;
+    background: linear-gradient(145deg, #20363b, #16282c);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.card-any .btn-del {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -219,6 +238,12 @@ h1 {
 }
 
 .card-expansivo:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    background: linear-gradient(145deg, #29464d, #1e363b);
+}
+
+.card-any:hover {
     transform: translateY(-10px) scale(1.03);
     box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     background: linear-gradient(145deg, #29464d, #1e363b);

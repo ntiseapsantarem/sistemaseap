@@ -276,7 +276,7 @@ onValue(ref(db, "anydesk"), (snap) => {
         const key = c.key;
 
         div.innerHTML += `
-            <div class="card-geral" width="10px" height="100px">
+            <div class="card-any">
                 
                 <div onclick="window.location.href='anydesk:${item.id}'">
                     <button class="btn-del" onclick="confirmarRemocao('${key}', event)">×</button>
