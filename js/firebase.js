@@ -301,3 +301,20 @@ window.confirmarRemocao = function(id, event) {
 function removerAny(id) {
     remove(ref(db, "anydesk/" + id));
 }
+
+window.filtrarAnyDesk = function () {
+
+    const termo = document.getElementById("search-any").value.toLowerCase();
+    const cards = document.querySelectorAll(".card-geral");
+
+    cards.forEach(card => {
+        const nome = card.getAttribute("data-nome").toLowerCase();
+        const id = card.getAttribute("data-id").toLowerCase();
+
+        if (nome.includes(termo) || id.includes(termo)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
+};
