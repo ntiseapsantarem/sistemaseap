@@ -47,10 +47,12 @@ h1 {
 }
 
 .any-list {
-    gap: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px;
 }
 
 /* ------------------------------------- 
