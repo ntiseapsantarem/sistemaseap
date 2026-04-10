@@ -276,7 +276,7 @@ onValue(ref(db, "anydesk"), (snap) => {
         const key = c.key;
 
         div.innerHTML += `
-            <div class="card-geral" data-nome="${item.nome}" data-id="${item.id}">
+            <div class="card-geral" data-nome="${item.nome}" data-id="${item.id}" width="180px" height="100px">
                 
                 <div onclick="window.location.href='anydesk:${item.id}'">
                     <button class="btn-del" onclick="confirmarRemocao('${key}', event)">×</button>
@@ -302,19 +302,3 @@ function removerAny(id) {
     remove(ref(db, "anydesk/" + id));
 }
 
-window.filtrarAnyDesk = function () {
-
-    const termo = document.getElementById("search-any").value.toLowerCase();
-    const cards = document.querySelectorAll(".card-geral");
-
-    cards.forEach(card => {
-        const nome = card.getAttribute("data-nome").toLowerCase();
-        const id = card.getAttribute("data-id").toLowerCase();
-
-        if (nome.includes(termo) || id.includes(termo)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
-};
