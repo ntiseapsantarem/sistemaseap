@@ -46,7 +46,7 @@ h1 {
     gap: 40px;
 }
 
-.any-list {
+#any-list {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,6 +131,8 @@ h1 {
     position: relative;
     overflow: hidden;
     transition: 0.3s;
+    border-radius: 15px;
+    padding: 20px;
 }
 
 .card-geral .btn-del {
