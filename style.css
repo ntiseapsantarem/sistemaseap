@@ -334,4 +334,16 @@ display: block; }
         
 .weekend-name { color: #26bd65; opacity: 0.8; font-weight: bold;}
         
-.today { border: 2px solid #2ecc71; background: rgba(46, 204, 113, 0.05); }
+td.today {
+    background: linear-gradient(135deg, #00c853, #00e676);
+    color: #000;
+    font-weight: bold;
+    border: 2px solid #00ff88;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,255,100,0.5);
+    border-radius: 8px;
+}
+
+td.today .day-number {
+    font-size: 18px;
+}
