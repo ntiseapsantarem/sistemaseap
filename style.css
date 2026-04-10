@@ -326,13 +326,12 @@ font-size: 0.7rem;
 }
         
 .weekend-text { 
-color: #1b5e20; 
+color: #174e1a; 
 font-size: 0.70rem; 
-font-weight: bold; 
 text-transform: uppercase; 
 margin: 0px; 
 display: block; }
         
-.weekend-name { color: #228b22; opacity: 0.8; }
+.weekend-name { color: #228d22; opacity: 0.8; font-weight: bold;}
         
 .today { border: 2px solid #2ecc71; background: rgba(46, 204, 113, 0.05); }
