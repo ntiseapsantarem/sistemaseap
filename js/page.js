@@ -1,6 +1,6 @@
 function irHome() {
-        window.location.href = "../index.html";
-    }
+    window.location.href = "../index.html";
+}
 
 function tiedite() {
     window.location.href = "ti-edite.html";

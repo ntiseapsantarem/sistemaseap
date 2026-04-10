@@ -273,14 +273,31 @@ onValue(ref(db, "anydesk"), (snap) => {
 
     snap.forEach(c => {
         const item = c.val();
+        const key = c.key;
 
         div.innerHTML += `
-            <div class="card-geral" onclick="window.location.href='anydesk:${item.id}'">
-                ${item.nome}<br>${item.id}
+            <div class="card-geral">
+                
+                <button class="btn-del" onclick="confirmarRemocao('${key}', event)">×</button>
+                
+                <div onclick="window.location.href='anydesk:${item.id}'">
+                    ${item.nome}<br>${item.id}
+                </div>
+
             </div>
         `;
     });
 });
+
+window.confirmarRemocao = function(id, event) {
+    event.stopPropagation(); // evita abrir o anydesk ao clicar no X
+
+    const confirmar = confirm("Tem certeza que deseja excluir este acesso?");
+
+    if (confirmar) {
+        removerAny(id);
+    }
+}
 
 function removerAny(id) {
     remove(ref(db, "anydesk/" + id));

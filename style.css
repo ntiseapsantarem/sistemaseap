@@ -123,6 +123,20 @@ h1 {
     transition: 0.3s;
 }
 
+.card-geral .btn-del {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff7675;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .card-expansivo{
     background: linear-gradient(145deg, #20363b, #16282c);
     border-radius: 15px;
