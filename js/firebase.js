@@ -277,9 +277,11 @@ onValue(ref(db, "anydesk"), (snap) => {
 
         div.innerHTML += `
             <div class="card-any">
-                
+
+                <button class="btn-edit" onclick="editarAny('${key}', '${item.nome}', '${item.id}', event)">✏️</button>
+                <button class="btn-del" onclick="confirmarRemocao('${key}', event)">×</button>
+
                 <div onclick="window.location.href='anydesk:${item.id}'">
-                    <button class="btn-del" onclick="confirmarRemocao('${key}', event)">×</button>
                     ${item.nome}<br>${item.id}
                 </div>
 
@@ -302,3 +304,22 @@ function removerAny(id) {
     remove(ref(db, "anydesk/" + id));
 }
 
+window.editarAny = function(id, nomeAtual, idAtual, event) {
+    event.stopPropagation(); // evita abrir o anydesk
+
+    const novoNome = prompt("Editar nome:", nomeAtual);
+    if (novoNome === null) return;
+
+    const novoId = prompt("Editar ID:", idAtual);
+    if (novoId === null) return;
+
+    if (!novoNome || !novoId) {
+        alert("Preencha os campos corretamente");
+        return;
+    }
+
+    set(ref(db, "anydesk/" + id), {
+        nome: novoNome,
+        id: novoId
+    });
+};
