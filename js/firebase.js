@@ -22,10 +22,27 @@ let equipe = [];
 let escala = {};
 const now = new Date();
 
+
+function entrar() {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  signInWithEmailAndPassword(auth, email, senha)
+    .then(userCredential => {
+      alert("Login realizado!");
+      window.location.href = "painel.html"; // página protegida
+    })
+    .catch(error => {
+      alert("Erro: " + error.message);
+    });
+}
+
+
 /* ================================
    EXPOR FUNÇÕES
 ================================ */
 window.addTech = addTech;
+window.entrar = entrar;
 window.removerTech = removerTech;
 window.saveData = saveData;
 window.carregarDados = carregarDados;
@@ -327,20 +344,3 @@ window.editarAny = function(id, nomeAtual, idAtual, event) {
         id: novoId
     });
 };
-
-/* ================================
-   LOGIN
-================================ */
-function login() {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
-
-  signInWithEmailAndPassword(auth, email, senha)
-    .then(userCredential => {
-      alert("Login realizado!");
-      window.location.href = "painel.html"; // página protegida
-    })
-    .catch(error => {
-      alert("Erro: " + error.message);
-    });
-}
