@@ -335,3 +335,37 @@ display: block; }
 .weekend-name { color: #26bd65; opacity: 0.8; font-weight: bold;}
         
 .today { border: 2px solid #2ecc71; background: rgba(46, 204, 113, 0.05); }
+
+
+/* ------------------------------------- 
+-------------- FORMULARIO --------------
+---------------------------------------- */
+
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+
+input {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    margin-right: 10px;
+}
+
+.row { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 20px; }
+
+.detento-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-add { background-color: #3498db; color: white; }
+.btn-generate { background-color: #2ecc71; color: white; margin-top: 20px; }
+.btn-remove { background-color: #e74c3c; color: white; }
