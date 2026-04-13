@@ -16,24 +16,7 @@
     <button class="btn-generate" onclick="login()">Entrar</button>
 </div>
 
-<script type="module">
-import { auth } from './js/firebase.js';
-import { signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-
-window.login = function() {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
-
-  signInWithEmailAndPassword(auth, email, senha)
-    .then(() => {
-      window.location.href = "ti/ti-edite.html";
-    })
-    .catch(error => {
-      alert(error.message);
-    });
-}
-</script>
+<script type="module" src="js/firebase.js"></script>
 
 </body>
 </html>
