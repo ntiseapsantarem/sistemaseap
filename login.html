@@ -20,8 +20,22 @@
     import { auth } from './js/firebase.js';
     import { onAuthStateChanged, signOut } 
     from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+    function entrar() {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    signInWithEmailAndPassword(auth, email, senha)
+        .then(userCredential => {
+        alert("Login realizado!");
+        window.location.href = "./ti/ti-edite.html"; // página protegida
+        })
+        .catch(error => {
+        alert("Erro ao fazer login!");
+        });
+    }
+
 </script>
-<script type="module" src="../js/firebase.js"></script>
 
 </body>
 </html>
