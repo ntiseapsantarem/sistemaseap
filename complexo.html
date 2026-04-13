@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Complexo</title>
+<link rel="icon" href="img/logo.png" type="image/png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--  NAVBAR -->
+    <div class="navbar">
+        
+        <div class="navbar-left">
+            <img src="img/logo.png" class="logo">
+
+            <div>
+                <div class="title-left">SEAP-PA</div>
+                <div class="badge">SANTARÉM</div>
+            </div>
+        </div>
+
+        <div class="navbar-center">
+            SECRETARIA DE ESTADO DE<br>
+            ADMINISTRAÇÃO PENITENCIÁRIA
+        </div>
+
+        <div class="navbar-right" onclick="irHome()"><img src="img/casa.png" class="logo"></div>
+
+    </div>
+
+
+<!-- CONTEUDO --> 
+    <div class="div-geral">
+        <div class="header"><h1>Informações Complexo</h1></div>
+
+    <!-- CARD INFORMATIVOS -->
+        <div class="card-expansivo">
+            <div class="card-expansivo-btn">
+                <div class="left">
+                    <div>
+                        <div class="font-1-btn">Rádio HT</div>
+                        <p>Comunicação via rádio HT do complexo penitenciário de Santarém</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-expansivo-expansao">
+                CANAL 01 - PA <br>
+                CANAL 02 - CCPS <br>
+                CANAL 03 UCRFS <br>
+                CANAL 04 COPE <br>
+                CANAL 05 - UCRSTM <br>
+                CANAL 06 CETRANS <br>
+                CANAL 07 COMPLEXO <br>
+            </div>
+        </div>
+    </div>
+
+    
+<script src="js/expandir-card.js"></script>
+
+<script>
+function irHome() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

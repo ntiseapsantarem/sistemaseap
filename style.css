@@ -1,0 +1,337 @@
+/* ------------------------------------- 
+---------------CONF GERAL---------------
+---------------------------------------- */
+body { 
+    background-color: #2d3e40; 
+    color: white; 
+    font-family: 'Segoe UI', 
+    sans-serif; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+   
+.header { 
+    display: flex; 
+    align-items: 
+    center; 
+    margin-bottom: 20px; 
+}
+        
+h1 { 
+    font-size: 1.8rem; 
+    margin: 0; 
+    text-transform: uppercase; 
+    font-weight: 800; 
+}
+
+/* ------------------------------------- 
+------------------ DIV -----------------
+---------------------------------------- */
+
+.div-geral { 
+    margin: 40px; 
+    gap: 40px;
+}
+
+.div-center {
+    height: calc(100vh - 90px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.any-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap; 
+    margin: 40px; 
+    gap: 15px;
+}
+
+
+/* ------------------------------------- 
+-----------------NAV BAR----------------
+---------------------------------------- */
+.navbar {
+    width: 100%;
+    background: linear-gradient(to right, #1f2f33, #2f4348);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+}
+
+/* LADO ESQUERDO */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo {
+    width: 40px;
+}
+
+.title-left {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.badge {
+    background-color: #1db954;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 8px;
+    margin-top: 2px;
+    display: inline-block;
+}
+
+/* CENTRO */
+.navbar-center {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* DIREITA */
+.navbar-right {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+/* ------------------------------------- 
+----------------- BOTÕES ---------------
+---------------------------------------- */
+
+
+/* ------------------------------------- 
+----------------- CARDS ----------------
+---------------------------------------- */
+.card-geral{
+    width: 260px;
+    height: 180px;
+    background: linear-gradient(145deg, #20363b, #16282c);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.card-any{
+    width: 180px;
+    height: 100px;
+    background: linear-gradient(145deg, #20363b, #16282c);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.card-any .btn-del {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff7675;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-edit {
+    position: absolute;
+    top: 5px;
+    right: 30px; /* fica ao lado do X */
+    background: #f1c40f;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.card-expansivo{
+    background: linear-gradient(145deg, #20363b, #16282c);
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    cursor: default;
+    transition: 0.3s;
+}
+
+.card-expansivo-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.font-1-btn { 
+    font-size: 1.3rem; 
+    margin: 0; 
+    font-weight: bold; 
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* BODY (colapsado) */
+.card-expansivo-expansao {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 15px;
+    background: linear-gradient(145deg, #26383d, #1e2c30);
+    transition: max-heigyh 0.4s ease, padding 0.3s;
+}
+
+/* QUANDO ABERTO */
+.card-expansivo.active .card-expansivo-expansao {
+    max-height: 1000px;
+    padding: 15px;
+    animation: sembrilho 1s forwards;
+}
+
+/* SUB CARDS */
+.sub {
+    margin-top: 15px;
+}
+
+.sub-card {
+    background: #eee;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+
+/* ------------------------------------- 
+---------------- EFEITOS ---------------
+---------------------------------------- */
+/* SOMBRA E ZOOM CARD GERAL*/
+.card-geral:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    background: linear-gradient(145deg, #29464d, #1e363b);
+}
+
+.card-expansivo:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    background: linear-gradient(145deg, #29464d, #1e363b);
+}
+
+.card-any:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    background: linear-gradient(145deg, #29464d, #1e363b);
+}
+
+@keyframes brilho {
+    from {
+        transform: translateX(-100%) rotate(10deg);
+    }
+    to {
+        transform: translateX(250%) rotate(10deg);
+    }
+}
+@keyframes sembrilho {
+    from {
+        transform: translateX(0%) rotate(0deg);
+    }
+    to {
+        transform: translateX(0%) rotate(0deg);
+    }
+}
+
+/* ------------------------------------- 
+---------------- TABELA ----------------
+---------------------------------------- */
+.highlight { 
+color: #2ecc71; 
+}
+        
+.phone { 
+color: #88c999; 
+font-size: 1.1rem; 
+margin-left: 15px; 
+font-style: italic; 
+}
+  
+table { 
+width: 100%; 
+max-width: 750px; 
+border-collapse: collapse; 
+}
+        
+th, td { 
+border: 1px solid rgba(255,255,255,0.1); 
+width: 100PX; 
+height: 40px; 
+text-align: center; 
+vertical-align: top; 
+padding: 10px; 
+}
+        
+.day-number { 
+display: block; 
+font-size: 0.6rem; 
+opacity: 0.5; 
+text-align: right;
+}
+	
+th { height: 20px; }
+        
+.tech-name { 
+color: #2ecc71; 
+font-weight: bold; 
+margin: 1px; 
+display: block; 
+font-size: 0.7rem; 
+}
+        
+.weekend-text { 
+color: #174e1a; 
+font-size: 0.70rem; 
+text-transform: uppercase; 
+margin: 0px; 
+display: block; }
+        
+.weekend-name { color: #26bd65; opacity: 0.8; font-weight: bold;}
+        
+.today { border: 2px solid #2ecc71; background: rgba(46, 204, 113, 0.05); }
