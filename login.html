@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="icon" href="../img/logo.png" type="image/png">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="img/logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="div-center">
@@ -17,7 +17,7 @@
 </div>
 
 <script type="module">
-import { auth } from '../js/firebase.js';
+import { auth } from './js/firebase.js';
 import { signInWithEmailAndPassword } 
 from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
@@ -34,7 +34,6 @@ window.login = function() {
     });
 }
 </script>
-<script type="module" src="../js/firebase.js"></script>
 
 </body>
 </html>
