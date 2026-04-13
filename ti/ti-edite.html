@@ -165,33 +165,17 @@ from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 // PROTEÇÃO DA PÁGINA
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "index.html";
+    window.location.href = "../login.html";
   }
 });
 
 // LOGOUT
 window.sair = function() {
   signOut(auth).then(() => {
-    window.location.href = "index.html";
+    window.location.href = "../login.html";
   });
 }
-</script>
 
-<script>
-    const SENHA_CORRETA = "tiseap";
-
-    function validarAcesso() {
-        const senha = prompt("Digite a senha:");
-        if (senha === SENHA_CORRETA) {
-            document.body.style.display = "block";
-            carregarDados();
-        } else {
-            alert("Senha incorreta!");
-            window.location.href = "ti.html";
-        }
-    }
-
-    window.onload = () => validarAcesso();
 </script>
 <script type="module" src="../js/firebase.js"></script>
 
