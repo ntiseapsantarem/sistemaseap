@@ -158,12 +158,12 @@ h1 {
     position: absolute;
     top: 5px;
     right: 5px;
-    background: #ff7675;
+    background: #29464d;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     font-weight: bold;
 }
@@ -172,12 +172,12 @@ h1 {
     position: absolute;
     top: 5px;
     right: 30px; /* fica ao lado do X */
-    background: #f1c40f;
+    background: #29464d;
     color: black;
     border: none;
     border-radius: 50%;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     font-size: 12px;
 }
